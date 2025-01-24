@@ -1,0 +1,28 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+      "config:recommended",
+      "docker:enableMajor",
+      "replacements:k8s-registry-move",
+      ":automergeBranch",
+      ":disableRateLimiting",
+      ":dependencyDashboard",
+      ":semanticCommits",
+      ":skipStatusChecks",
+      ":timezone(America/New_York)"
+    ],
+    "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+    "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
+    "requireConfig": "ignored",
+    "customManagers": [
+      {
+        "customType": "regex",
+        "description": "Process fly.toml for container images",
+        "fileMatch": ["^fly\\.toml$"],
+        "matchStrings": ["image\\s*=\\s*\"(?<depName>[^\"]+):(?<currentValue>[^\"]+)\""],
+        "datasourceTemplate": "docker",
+        "versioningTemplate": "docker"
+      }
+    ]
+  }
+  
